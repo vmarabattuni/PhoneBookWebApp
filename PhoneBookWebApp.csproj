@@ -136,7 +136,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\ISoftDeletable.cs" />
+    <Compile Include="Migrations\202007201815040_initial_migration.cs" />
+    <Compile Include="Migrations\202007201815040_initial_migration.designer.cs">
+      <DependentUpon>202007201815040_initial_migration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Country.cs" />
     <Compile Include="Models\People.cs" />
@@ -184,11 +188,6 @@
     <Content Include="Views\People\Details.cshtml" />
     <Content Include="Views\People\Edit.cshtml" />
     <Content Include="Views\People\Index.cshtml" />
-    <Content Include="Views\Cities\Create.cshtml" />
-    <Content Include="Views\Cities\Delete.cshtml" />
-    <Content Include="Views\Cities\Details.cshtml" />
-    <Content Include="Views\Cities\Edit.cshtml" />
-    <Content Include="Views\Cities\Index.cshtml" />
     <Content Include="Views\States\Create.cshtml" />
     <Content Include="Views\States\Delete.cshtml" />
     <Content Include="Views\States\Details.cshtml" />
@@ -199,6 +198,11 @@
     <Content Include="Views\Countries\Details.cshtml" />
     <Content Include="Views\Countries\Edit.cshtml" />
     <Content Include="Views\Countries\Index.cshtml" />
+    <Content Include="Views\Cities\Create.cshtml" />
+    <Content Include="Views\Cities\Delete.cshtml" />
+    <Content Include="Views\Cities\Details.cshtml" />
+    <Content Include="Views\Cities\Edit.cshtml" />
+    <Content Include="Views\Cities\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -215,6 +219,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007201815040_initial_migration.resx">
+      <DependentUpon>202007201815040_initial_migration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

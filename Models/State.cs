@@ -19,9 +19,13 @@ namespace PhoneBookWebApp.Models
         [Required]
         public String StateName { get; set; }
 
-       
-
         public bool IsActive { get; set; } = true;
+
+
+        [Required]
+        [ForeignKey("Country")]
+        public int CountryId { get; set; }
+
 
         public virtual Country Country { get; set; }
         public virtual ICollection<City> Cities { get; set; }

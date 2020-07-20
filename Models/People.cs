@@ -47,21 +47,19 @@ namespace PhoneBookWebApp.Models
         [Display(Name = "Pin Code")]
         [Required]
         public int PinCode { get; set; }
+        public Boolean IsActive { get; set; } = true;
 
         [Required]
-        //[ForeignKey("Fk_People_Country")]
+        [ForeignKey("Country")]
         public int CountryId { get; set; }
 
         [Required]
-        //[ForeignKey("Fk_People_State")]
+        [ForeignKey("State")]
         public int StateId { get; set; }
 
         [Required]
-        //[ForeignKey("Fk_People_City")]
+        [ForeignKey("City")]
         public int CityId { get; set; }
-
-
-        public Boolean IsActive { get; set; } = true;
 
         public virtual Country Country { get; set; }
         public virtual State State { get; set; }

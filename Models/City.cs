@@ -17,10 +17,13 @@ namespace PhoneBookWebApp.Models
 
         [Display(Name = "City Name")]
         [Required]
-        public String CityName { get; set; }
-
-       
+        public String CityName { get; set; } 
         public bool IsActive { get; set; } = true;
+
+
+        [Required]
+        [ForeignKey("State")]
+        public int StateId { get; set; }
 
         public virtual State State { get; set; }
 

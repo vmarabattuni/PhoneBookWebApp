@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
-using PhoneBookWebApp.Interfaces;
 using System.Web;
 
 namespace PhoneBookWebApp.DAL
@@ -13,7 +12,7 @@ namespace PhoneBookWebApp.DAL
     {
         public PhoneBookContext(): base("PhoneBookContext")
         {
-
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<PhoneBookContext, PhoneBookWebApp.Migrations.Configuration>("PhoneBookContext"));
         }
         public DbSet<People> Peoples { get; set; }
         public DbSet<Country> Countries { get; set; }
@@ -23,6 +22,7 @@ namespace PhoneBookWebApp.DAL
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 
             modelBuilder.Entity<People>().Map(map =>
             {
@@ -68,7 +68,7 @@ namespace PhoneBookWebApp.DAL
                 foreach (var entry in Changed.Where(e => e.State == EntityState.Deleted))
                 {
                     entry.State = EntityState.Unchanged;
-                    ((ISoftDeletable)entry.Entity).IsActive = false;
+                    entry.CurrentValues["IsActive"] = false;
                 }
             }
             return base.SaveChanges();
