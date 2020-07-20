@@ -67,7 +67,7 @@ namespace PhoneBookWebApp.DAL
             {
                 foreach (var entry in Changed.Where(e => e.State == EntityState.Deleted))
                 {
-                    entry.State = EntityState.Unchanged;
+                    entry.State = EntityState.Modified;
                     entry.CurrentValues["IsActive"] = false;
                 }
             }
