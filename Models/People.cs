@@ -49,15 +49,15 @@ namespace PhoneBookWebApp.Models
         public int PinCode { get; set; }
 
         [Required]
-        [ForeignKey("Fk_People_Country")]
+        //[ForeignKey("Fk_People_Country")]
         public int CountryId { get; set; }
 
         [Required]
-        [ForeignKey("Fk_People_State")]
+        //[ForeignKey("Fk_People_State")]
         public int StateId { get; set; }
 
         [Required]
-        [ForeignKey("Fk_People_City")]
+        //[ForeignKey("Fk_People_City")]
         public int CityId { get; set; }
 
 
