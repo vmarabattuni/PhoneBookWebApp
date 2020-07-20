@@ -34,7 +34,37 @@ namespace PhoneBookWebApp.Models
         [Required]
         [EmailAddress]
         public String Email { get; set; }
+
+
+        //Address Part
+        [Display(Name = "Address Line One")]
+        [Required]
+        public String AddressOne { get; set; }
+
+        [Display(Name = "Address Line Two")]
+        public String AddressTwo { get; set; }
+
+        [Display(Name = "Pin Code")]
+        [Required]
+        public int PinCode { get; set; }
+
+        [Required]
+        [ForeignKey("Fk_People_Country")]
+        public int CountryId { get; set; }
+
+        [Required]
+        [ForeignKey("Fk_People_State")]
+        public int StateId { get; set; }
+
+        [Required]
+        [ForeignKey("Fk_People_City")]
+        public int CityId { get; set; }
+
+
         public Boolean IsActive { get; set; } = true;
-       public virtual ICollection<Address> Addresses { get; set; }
+
+        public virtual Country Country { get; set; }
+        public virtual State State { get; set; }
+        public virtual City City { get; set; }
     }
 }

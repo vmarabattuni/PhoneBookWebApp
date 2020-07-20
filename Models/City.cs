@@ -13,19 +13,16 @@ namespace PhoneBookWebApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Column(Order = 1)]
-        public int ID { get; set; }
+        public int CityId { get; set; }
 
         [Display(Name = "City Name")]
         [Required]
         public String CityName { get; set; }
 
+       
         public bool IsActive { get; set; } = true;
 
-        [ForeignKey("State")]
-        [Display(Name = "State")]
-        public int StateID { get; set; }
         public virtual State State { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
 
 
     }

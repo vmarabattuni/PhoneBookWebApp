@@ -13,7 +13,7 @@ namespace PhoneBookWebApp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Column(Order = 1)]
-        public int ID { get; set; }
+        public int CuntryId { get; set; }
 
         [Display(Name = "Country Name")]
         [Required]
@@ -22,7 +22,6 @@ namespace PhoneBookWebApp.Models
         public bool IsActive { get; set; } = true;
 
         public virtual ICollection<State> States  { get; set; }
-        public virtual ICollection<Address> Addresses { get; set; }
 
 
 

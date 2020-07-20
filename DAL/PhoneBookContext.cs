@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
+using PhoneBookWebApp.Interfaces;
 using System.Web;
 
 namespace PhoneBookWebApp.DAL
@@ -15,44 +16,62 @@ namespace PhoneBookWebApp.DAL
 
         }
         public DbSet<People> Peoples { get; set; }
-        public DbSet<Address> Addresses { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<City> Cities { get; set; }
+     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            //modelBuilder.Entity<Address>()
-            //    .HasRequired<People>(s => s.People)
-            //    .WithMany()
-            //    .WillCascadeOnDelete(false);
+            modelBuilder.Entity<People>().Map(map =>
+            {
+                map.Properties(
+                    p => new
+                    {
+                        p.ID,
+                        p.FirstName,
+                        p.LastName,
+                        p.Email,
+                        p.PhoneNumber,
+                        p.IsActive
 
-            //modelBuilder.Entity<Address>()
-            //   .HasRequired<Country>(s => s.Country)
-            //   .WithMany()
-            //   .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<Address>()
-            //   .HasRequired<State>(s => s.State)
-            //   .WithMany()
-            //   .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<Address>()
-            //   .HasRequired<City>(s => s.City)
-            //   .WithMany()
-            //   .WillCascadeOnDelete(false);
+                    });
+                map.ToTable("People");
+            })
+           .Map(map =>
+           {
+               map.Properties(
+                   p => new
+                   {
+                       p.AddressOne,
+                       p.AddressTwo,
+                       p.CityId,
+                       p.StateId,
+                       p.CountryId,
+                       p.PinCode
+                   });
+               map.ToTable("Address");
+           });
 
-            //modelBuilder.Entity<State>()
-            //   .HasRequired<Country>(s => s.Country)
-            //   .WithMany()
-            //   .WillCascadeOnDelete(false);
 
-            //modelBuilder.Entity<City>()
-            //   .HasRequired<State>(s => s.State)
-            //   .WithMany()
-            //   .WillCascadeOnDelete(false);
 
+        }
+
+        public override int SaveChanges()
+        {
+            var Changed = ChangeTracker.Entries();
+            if (Changed != null)
+            {
+                foreach (var entry in Changed.Where(e => e.State == EntityState.Deleted))
+                {
+                    entry.State = EntityState.Unchanged;
+                    ((ISoftDeletable)entry.Entity).IsActive = false;
+                }
+            }
+            return base.SaveChanges();
         }
     }
 }
