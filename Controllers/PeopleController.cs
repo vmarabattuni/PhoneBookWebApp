@@ -20,16 +20,18 @@ namespace PhoneBookWebApp.Controllers
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                var people = db.Peoples.Where(p => p.FirstName.Contains(searchString) ||
+                var people = db.Peoples.Where(p => (p.FirstName.Contains(searchString) ||
                                                    p.LastName.Contains(searchString) ||
                                                    p.Country.CountryName.Contains(searchString) ||
                                                    p.State.StateName.Contains(searchString) ||
                                                    p.City.CityName.Contains(searchString) ||
                                                    p.Email.Contains(searchString) ||
-                                                   p.PhoneNumber.Contains(searchString));
+                                                   p.PhoneNumber.Contains(searchString)) &&
+                                                   p.IsActive);
                 return View(people.ToList());
             }
             var peoples = db.Peoples.Include(p => p.City).Include(p => p.Country).Include(p => p.State);
+            peoples = peoples.Where(p => p.IsActive.Equals(true));
             return View(peoples.ToList());
         }
 

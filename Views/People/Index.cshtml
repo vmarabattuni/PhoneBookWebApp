@@ -6,6 +6,7 @@
 
 <h2>Index</h2>
 
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -53,9 +54,7 @@
         <th>
             @Html.DisplayNameFor(model => model.PinCode)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
+       
         <th></th>
     </tr>
 
@@ -92,9 +91,7 @@
     <td>
         @Html.DisplayFor(modelItem => item.PinCode)
     </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.IsActive)
-    </td>
+    
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
         @Html.ActionLink("Details", "Details", new { id = item.ID }) |

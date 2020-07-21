@@ -50,14 +50,17 @@ namespace PhoneBookWebApp.Models
         public Boolean IsActive { get; set; } = true;
 
         [Required]
+        [Display(Name = "Country")]
         [ForeignKey("Country")]
         public int CountryId { get; set; }
 
         [Required]
+        [Display(Name = "State")]
         [ForeignKey("State")]
         public int StateId { get; set; }
 
         [Required]
+        [Display(Name = "City")]
         [ForeignKey("City")]
         public int CityId { get; set; }
 

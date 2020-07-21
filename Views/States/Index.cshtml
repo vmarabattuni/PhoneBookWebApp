@@ -17,9 +17,7 @@
         <th>
             @Html.DisplayNameFor(model => model.StateName)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
+ 
         <th></th>
     </tr>
 
@@ -31,9 +29,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.StateName)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.SateId }) |
             @Html.ActionLink("Details", "Details", new { id=item.SateId }) |
