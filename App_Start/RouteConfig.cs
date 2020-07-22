@@ -18,6 +18,22 @@ namespace PhoneBookWebApp
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "People", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                "GetStates",
+                "{controller}/{action}",
+                new { controller = "People", action = "GetStates" },
+                 new[] { "PhoneBookWebApp.Controllerss" }
+            );
+
+
+            routes.MapRoute(
+                "GetCities",
+                "{controller}/{action}",
+                new { controller = "People", action = "GetCities" },
+                new[] { "PhoneBookWebApp.Controllerss" }
+            );
+
         }
     }
 }
