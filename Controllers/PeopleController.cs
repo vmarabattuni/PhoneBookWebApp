@@ -20,19 +20,19 @@ namespace PhoneBookWebApp.Controllers
         {
             if (!String.IsNullOrEmpty(searchString))
             {
-                var people = db.Peoples.Where(p => (p.FirstName.Contains(searchString) ||
+                List<People> people = db.Peoples.Where(p => (p.FirstName.Contains(searchString) ||
                                                    p.LastName.Contains(searchString) ||
                                                    p.Country.CountryName.Contains(searchString) ||
                                                    p.State.StateName.Contains(searchString) ||
                                                    p.City.CityName.Contains(searchString) ||
                                                    p.Email.Contains(searchString) ||
                                                    p.PhoneNumber.Contains(searchString)) &&
-                                                   p.IsActive);
-                return View(people.ToList());
+                                                   p.IsActive).ToList();
+                return View(people);
             }
-            var peoples = db.Peoples.Include(p => p.City).Include(p => p.Country).Include(p => p.State);
-            peoples = peoples.Where(p => p.IsActive.Equals(true));
-            return View(peoples.ToList());
+            List<People> peoples = db.Peoples.Include(p => p.City).Include(p => p.Country).Include(p => p.State).Where(p => p.IsActive).ToList();
+            
+            return View(peoples);
         }
 
 
@@ -114,11 +114,7 @@ namespace PhoneBookWebApp.Controllers
         public ActionResult Create()
         {
 
-            //ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName");
-            //ViewBag.CountryId = new SelectList(db.Countries, "CuntryId", "CountryName");
-            //ViewBag.StateId = new SelectList(db.States, "SateId", "StateName");
-
-            var country = db.Countries.Where(c => c.IsActive).ToList();
+            List<Country> country = db.Countries.Where(c => c.IsActive).ToList();
             List<SelectListItem> cL = new List<SelectListItem>();
 
             foreach(var c in country)
@@ -147,9 +143,7 @@ namespace PhoneBookWebApp.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", people.CityId);
-            //ViewBag.CountryId = new SelectList(db.Countries, "CuntryId", "CountryName", people.CountryId);
-            //ViewBag.StateId = new SelectList(db.States, "SateId", "StateName", people.StateId);
+           
             return View(people);
         }
 
@@ -188,7 +182,7 @@ namespace PhoneBookWebApp.Controllers
 
         // POST: People/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,FirstName,LastName,PhoneNumber,Email,AddressOne,AddressTwo,PinCode,IsActive,CountryId,StateId,CityId")] People people)
@@ -199,9 +193,7 @@ namespace PhoneBookWebApp.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            //ViewBag.CityId = new SelectList(db.Cities, "CityId", "CityName", people.CityId);
-            //ViewBag.CountryId = new SelectList(db.Countries, "CuntryId", "CountryName", people.CountryId);
-            //ViewBag.StateId = new SelectList(db.States, "SateId", "StateName", people.StateId);
+           
             return View(people);
         }
 
