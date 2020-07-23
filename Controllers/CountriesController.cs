@@ -30,9 +30,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Country country = db.Countries.Find(id);
-            if (country == null)
+            if (country == null || country.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "Country is not found";
+                return View("Error");
             }
             return View(country);
         }
@@ -68,9 +69,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Country country = db.Countries.Find(id);
-            if (country == null)
+            if (country == null || country.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "Country is not found";
+                return View("Error");
             }
             return View(country);
         }
@@ -99,9 +101,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Country country = db.Countries.Find(id);
-            if (country == null)
+            if (country == null || country.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "Country is not found";
+                return View("Error");
             }
             return View(country);
         }
@@ -111,10 +114,21 @@ namespace PhoneBookWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Country country = db.Countries.Find(id);
-            db.Countries.Remove(country);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            List<People> people = db.Peoples.Where(p => p.CountryId == id && p.IsActive).ToList();
+
+            if (people.Count > 0)
+            {
+                ViewBag.Error = "Can not delete Because there exists people in this country";
+                return View("Error");
+            }
+            else
+            {
+                Country country = db.Countries.Find(id);
+                db.Countries.Remove(country);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

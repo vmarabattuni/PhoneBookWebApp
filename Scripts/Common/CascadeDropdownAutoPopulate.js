@@ -6,7 +6,7 @@ $(document).ready(function () {
         $.ajax({
                 cache: false,
                 type: 'POST',
-                url: 'GetStates',
+                url: "GetStates",
 
                 dataType: 'json',
 
@@ -37,7 +37,7 @@ $(document).ready(function () {
         $.ajax({
                 cache: false,
                 type: 'POST',
-                url: 'GetCities',
+                url: "GetCities",
                 dataType: 'json',
                 data: { id: $("#StateId").val() },
 

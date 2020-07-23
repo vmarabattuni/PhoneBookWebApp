@@ -103,9 +103,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             People people = db.Peoples.Find(id);
-            if (people == null)
+            if (people == null || people.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "Person is not found";
+                return View("Error");
             }
             return View(people);
         }
@@ -148,6 +149,7 @@ namespace PhoneBookWebApp.Controllers
         }
 
         // GET: People/Edit/5
+        
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -155,9 +157,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             People people = db.Peoples.Find(id);
-            if (people == null)
+            if (people == null || people.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "Person is not found";
+                return View("Error"); ;
             }
 
             var country = db.Countries.Where(c => c.IsActive).ToList();
@@ -205,9 +208,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             People people = db.Peoples.Find(id);
-            if (people == null)
+            if (people == null || people.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "Person is not found";
+                return View("Error");
             }
             return View(people);
         }

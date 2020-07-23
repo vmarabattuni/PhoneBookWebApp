@@ -31,9 +31,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             State state = db.States.Find(id);
-            if (state == null)
+            if (state == null || state.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "State is not found";
+                return View("Error");
             }
             return View(state);
         }
@@ -71,9 +72,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             State state = db.States.Find(id);
-            if (state == null)
+            if (state == null || state.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "State is not found";
+                return View("Error");
             }
             ViewBag.CountryId = new SelectList(db.Countries, "CuntryId", "CountryName", state.CountryId);
             return View(state);
@@ -104,9 +106,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             State state = db.States.Find(id);
-            if (state == null)
+            if (state == null || state.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "State  is not found";
+                return View("Error");
             }
             return View(state);
         }
@@ -116,10 +119,20 @@ namespace PhoneBookWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            State state = db.States.Find(id);
-            db.States.Remove(state);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            List<People> people = db.Peoples.Where(p => p.StateId == id && p.IsActive).ToList();
+
+            if (people.Count > 0)
+            {
+                ViewBag.Error = "Can not delete Because there exists people in this State";
+                return View("Error");
+            }
+            else
+            {
+                State state = db.States.Find(id);
+                db.States.Remove(state);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)

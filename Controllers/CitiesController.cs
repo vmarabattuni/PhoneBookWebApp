@@ -31,9 +31,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             City city = db.Cities.Find(id);
-            if (city == null)
+            if (city == null || city.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "City  is not found";
+                return View("Error");
             }
             return View(city);
         }
@@ -71,9 +72,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             City city = db.Cities.Find(id);
-            if (city == null)
+            if (city == null || city.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "City is not found";
+                return View("Error");
             }
             ViewBag.StateId = new SelectList(db.States, "SateId", "StateName", city.StateId);
             return View(city);
@@ -104,9 +106,10 @@ namespace PhoneBookWebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             City city = db.Cities.Find(id);
-            if (city == null)
+            if (city == null || city.IsActive.Equals(false))
             {
-                return HttpNotFound();
+                ViewBag.Error = "City is not found";
+                return View("Error");
             }
             return View(city);
         }
@@ -116,10 +119,20 @@ namespace PhoneBookWebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            City city = db.Cities.Find(id);
-            db.Cities.Remove(city);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            List<People> people = db.Peoples.Where(p => p.CityId == id && p.IsActive).ToList();
+
+            if (people.Count > 0)
+            {
+                ViewBag.Error = "Can not delete Because there exists people in this City";
+                return View("Error");
+            }
+            else
+            {
+                City city = db.Cities.Find(id);
+                db.Cities.Remove(city);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         protected override void Dispose(bool disposing)
