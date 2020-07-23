@@ -116,19 +116,28 @@ namespace PhoneBookWebApp.Controllers
         {
 
             List<Country> country = db.Countries.Where(c => c.IsActive).ToList();
-            List<SelectListItem> cL = new List<SelectListItem>();
 
-            foreach(var c in country)
+            if (country != null)
             {
-                cL.Add(new SelectListItem
+                List<SelectListItem> cL = new List<SelectListItem>();
+
+                foreach (var c in country)
                 {
-                    Text = c.CountryName,
-                    Value = c.CuntryId.ToString()
-                    
-                });
-                ViewBag.country = cL;
+                    cL.Add(new SelectListItem
+                    {
+                        Text = c.CountryName,
+                        Value = c.CuntryId.ToString()
+
+                    });
+                    ViewBag.country = cL;
+                }
+                return View();
             }
-            return View();
+            else
+            {
+                ViewBag.Error = "Data Insufficient Error";
+                return View("Error");
+            }
         }
 
         // POST: People/Create

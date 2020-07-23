@@ -4,9 +4,8 @@ $(document).ready(function () {
     $("#CountryId").change(function () {
         $("#StateId").empty();
         $.ajax({
-                cache: false,
                 type: 'POST',
-                url: "GetStates",
+                url: 'GetStates',
 
                 dataType: 'json',
 
@@ -35,9 +34,8 @@ $(document).ready(function () {
     $("#StateId").change(function () {
         $("#CityId").empty();
         $.ajax({
-                cache: false,
                 type: 'POST',
-                url: "GetCities",
+                url: 'GetCities',
                 dataType: 'json',
                 data: { id: $("#StateId").val() },
 
