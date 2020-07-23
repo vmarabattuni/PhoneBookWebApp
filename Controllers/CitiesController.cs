@@ -42,8 +42,18 @@ namespace PhoneBookWebApp.Controllers
         // GET: Cities/Create
         public ActionResult Create()
         {
-            ViewBag.StateId = new SelectList(db.States, "SateId", "StateName");
-            return View();
+            List<State> states = db.States.Where(s => s.IsActive).ToList();
+            ViewBag.StateId = new SelectList(states, "SateId", "StateName");
+            if (ViewBag.StateId != null)
+            {
+                return View();
+            }
+            else
+            {
+                ViewBag.Error = "Country is required before adding state";
+                return View();
+            }
+
         }
 
         // POST: Cities/Create
@@ -55,6 +65,7 @@ namespace PhoneBookWebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+               
                 db.Cities.Add(city);
                 db.SaveChanges();
                 return RedirectToAction("Index");

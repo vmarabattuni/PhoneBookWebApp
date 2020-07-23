@@ -27,7 +27,7 @@ $(document).ready(function () {
             });
             return false;
         })
-        });
+});
 
 $(document).ready(function () {
 
@@ -53,6 +53,6 @@ $(document).ready(function () {
             });
             return false;
         })
-        });
+});
 
 

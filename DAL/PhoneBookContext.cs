@@ -70,6 +70,8 @@ namespace PhoneBookWebApp.DAL
                     entry.State = EntityState.Modified;
                     entry.CurrentValues["IsActive"] = false;
                 }
+
+              
             }
             return base.SaveChanges();
         }

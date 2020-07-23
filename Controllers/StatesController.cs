@@ -42,8 +42,19 @@ namespace PhoneBookWebApp.Controllers
         // GET: States/Create
         public ActionResult Create()
         {
-            ViewBag.CountryId = new SelectList(db.Countries, "CuntryId", "CountryName");
-            return View();
+            List<Country> country = db.Countries.Where(c => c.IsActive).ToList();
+
+            ViewBag.CountryId = new SelectList(country, "CuntryId", "CountryName");
+            if(ViewBag.CountryId != null)
+            {
+                return View();
+            }
+            else
+            {
+                ViewBag.Error = "Country is required before adding state";
+                return View();
+            }
+            
         }
 
         // POST: States/Create
