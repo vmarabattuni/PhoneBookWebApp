@@ -59,13 +59,13 @@ namespace PhoneBookWebApp.Controllers
                             var nr = group["count"];
                             if(group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where( p => p.IsActive).Skip(int.Parse(start)-1).OrderBy( p => p.Email);
+                                var li = db.Peoples.Where( p => p.IsActive).Skip(int.Parse(start)-1).OrderBy( p => p.Email).Select( p => new { p.FirstName, p.LastName, p.Email});
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.Email);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.Email).Select(p => new { p.FirstName, p.LastName, p.Email });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
@@ -82,13 +82,13 @@ namespace PhoneBookWebApp.Controllers
                             var nr = group["count"];
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.PhoneNumber);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.PhoneNumber).Select(p => new { p.FirstName, p.LastName, p.PhoneNumber });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.PhoneNumber);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.PhoneNumber).Select(p => new { p.FirstName, p.LastName, p.PhoneNumber });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
@@ -104,13 +104,13 @@ namespace PhoneBookWebApp.Controllers
                             var nr = group["count"];
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.StateId);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.StateId).Select(p => new { p.FirstName, p.LastName, p.StateId });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.StateId);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.StateId).Select(p => new { p.FirstName, p.LastName, p.StateId });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
@@ -127,13 +127,13 @@ namespace PhoneBookWebApp.Controllers
                             var nr = group["count"];
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.CountryId);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.CountryId).Select(p => new { p.FirstName, p.LastName, p.CountryId });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.CountryId);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.CountryId).Select(p => new { p.FirstName, p.LastName, p.CountryId });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
@@ -149,13 +149,13 @@ namespace PhoneBookWebApp.Controllers
                             var nr = group["count"];
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.CityId);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.CityId).Select(p => new { p.FirstName, p.LastName, p.CityId });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.CityId);
+                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.CityId).Select(p => new { p.FirstName, p.LastName, p.CityId });
                                 var nli = li.Take(int.Parse(nr));
                                 return View(nli);
                             }
