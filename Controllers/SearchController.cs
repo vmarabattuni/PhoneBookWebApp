@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using PhoneBookWebApp.DAL;
 using PhoneBookWebApp.Models;
 using System.Data;
+using System.Collections;
 
 namespace PhoneBookWebApp.Controllers
 {
@@ -29,6 +30,7 @@ namespace PhoneBookWebApp.Controllers
             listorderGroup.Add(new SelectListItem { Text = "Ascending", Value = "Ascending" });
             listorderGroup.Add(new SelectListItem { Text = "Descending", Value = "Descending" });
             ViewBag.listDropDown = listGroup;
+            ViewBag.Counts = 0;
             ViewBag.order = listorderGroup;
             return View();
         }
@@ -47,27 +49,34 @@ namespace PhoneBookWebApp.Controllers
             listorderGroup.Add(new SelectListItem { Text = "Ascending", Value = "Ascending" });
             listorderGroup.Add(new SelectListItem { Text = "Descending", Value = "Descending" });
             ViewBag.listDropDown = listGroup;
+            ViewBag.Counts = 0;
             ViewBag.order = listorderGroup;
             if (!String.IsNullOrEmpty(group["selects"]))
             {
+                ViewBag.SelectedField = group["selects"];
+                
+                var start = group["Start"];
+                var nr = group["count"];
                 switch (group["selects"])
                 {
+                    
                     case "Email":
                         if (!String.IsNullOrEmpty(group["Start"]))
                         {
-                            var start = group["Start"];
-                            var nr = group["count"];
+                            
                             if(group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where( p => p.IsActive).Skip(int.Parse(start)-1).OrderBy( p => p.Email).Select( p => new { p.FirstName, p.LastName, p.Email});
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderBy(p => p.Email).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Lists = li;
+                                ViewBag.Counts = li.Count();
+                                return View();
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.Email).Select(p => new { p.FirstName, p.LastName, p.Email });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderByDescending(p => p.Email).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Counts = li.Count();
+                                ViewBag.Lists = li;
+                                return View();
                             }
                         }
                         else
@@ -78,19 +87,20 @@ namespace PhoneBookWebApp.Controllers
                     case "Phone":
                         if (!String.IsNullOrEmpty(group["Start"]))
                         {
-                            var start = group["Start"];
-                            var nr = group["count"];
+                            
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.PhoneNumber).Select(p => new { p.FirstName, p.LastName, p.PhoneNumber });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderBy(p => p.PhoneNumber).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Lists = li;
+                                ViewBag.Counts = li.Count();
+                                return View();
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.PhoneNumber).Select(p => new { p.FirstName, p.LastName, p.PhoneNumber });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderByDescending(p => p.PhoneNumber).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Lists = li;
+                                ViewBag.Counts = li.Count();
+                                return View();
                             }
                         }
                         else
@@ -100,19 +110,20 @@ namespace PhoneBookWebApp.Controllers
                     case "State":
                         if (!String.IsNullOrEmpty(group["Start"]))
                         {
-                            var start = group["Start"];
-                            var nr = group["count"];
+                            
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.StateId).Select(p => new { p.FirstName, p.LastName, p.StateId });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderBy(p => p.StateId).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Lists = li;
+                                ViewBag.Counts = li.Count();
+                                return View();
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.StateId).Select(p => new { p.FirstName, p.LastName, p.StateId });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderByDescending(p => p.StateId).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Lists = li;
+                                ViewBag.Counts = li.Count();
+                                return View();
                             }
                         }
                         else
@@ -123,19 +134,20 @@ namespace PhoneBookWebApp.Controllers
                     case "Country":
                         if (!String.IsNullOrEmpty(group["Start"]))
                         {
-                            var start = group["Start"];
-                            var nr = group["count"];
+                           
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.CountryId).Select(p => new { p.FirstName, p.LastName, p.CountryId });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderBy(p => p.CountryId).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Lists = li;
+                                ViewBag.Counts = li.Count();
+                                return View();
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.CountryId).Select(p => new { p.FirstName, p.LastName, p.CountryId });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderByDescending(p => p.CountryId).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Counts = li.Count();
+                                ViewBag.Lists = li;
+                                return View();
                             }
                         }
                         else
@@ -145,19 +157,20 @@ namespace PhoneBookWebApp.Controllers
                     case "City":
                         if (!String.IsNullOrEmpty(group["Start"]))
                         {
-                            var start = group["Start"];
-                            var nr = group["count"];
+                           
                             if (group["order"] == "Ascending")
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderBy(p => p.CityId).Select(p => new { p.FirstName, p.LastName, p.CityId });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderBy(p => p.CityId).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Counts = li.Count();
+                                ViewBag.Lists = li;
+                                return View();
                             }
                             else
                             {
-                                var li = db.Peoples.Where(p => p.IsActive).Skip(int.Parse(start) - 1).OrderByDescending(p => p.CityId).Select(p => new { p.FirstName, p.LastName, p.CityId });
-                                var nli = li.Take(int.Parse(nr));
-                                return View(nli);
+                                var li = db.Peoples.Where(p => p.IsActive).OrderByDescending(p => p.CityId).Skip(int.Parse(start) - 1).Take(int.Parse(nr)).ToList();
+                                ViewBag.Counts = li.Count();
+                                ViewBag.Lists = li;
+                                return View();
                             }
                         }
                         else
