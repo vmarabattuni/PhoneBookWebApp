@@ -34,14 +34,16 @@
 
         @Html.Label("Start From", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBox("Start")
+            @*@Html.TextBox("Start")*@
+            <input type="number" name="Start" class = "form-control"/>
         </div>
     </div>
 
     <div class="form-group">
         @Html.Label("Number of records to display", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBox("count")
+            @*@Html.TextBox("count")*@
+            <input type="number" name="count" class = "form-control" />
         </div>
 
 
